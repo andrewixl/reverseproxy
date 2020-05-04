@@ -21,7 +21,7 @@ def addConfig(request):
 	return redirect('/')
 
 def removeConfig(request, id):
-	config = Config.objects.get(id)
+	config = Config.objects.get(id=id)
 	os.system("rm /etc/nginx/sites-enable/" + config.name + ".conf")
 
 	config.delete()
