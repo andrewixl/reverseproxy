@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Config
 from django.contrib import messages
+import os
 
 def index(request):
 	# Config.objects.all().delete()
@@ -19,6 +20,16 @@ def addConfig(request):
 		messages.success(request, 'New Config has Been Created')
 	return redirect('/')
 
+def removeConfig(request, id):
+	config = Config.objects.get(id)
+	os.system("rm /etc/nginx/sites-enable/" + config.name + ".conf")
+
+	config.delete()
+	messages.success(request, 'Config has Been Deleted')
+	return redirect('/')
+
+
+# Creates Nginx Configuration File
 def createConfig(name, fqdn, ip, port):
 	print ("Config Creation Started")
 	# Ubuntu
@@ -39,3 +50,4 @@ def createConfig(name, fqdn, ip, port):
 }
 	''')
 	file.close()
+	os.system("service nginx restart")
