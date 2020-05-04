@@ -22,7 +22,7 @@ def addConfig(request):
 
 def removeConfig(request, id):
 	config = Config.objects.get(id=id)
-	os.system("rm /etc/nginx/sites-enable/" + config.name + ".conf")
+	os.remove("/etc/nginx/sites-enable/" + config.name + ".conf")
 
 	config.delete()
 	messages.success(request, 'Config has Been Deleted')
