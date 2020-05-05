@@ -25,6 +25,8 @@ def addConfig(request):
 
 def removeConfig(request, id):
 	config = Config.objects.get(id=id)
+	if (config.ssl == True):
+		os.system("sudo certbot delete --cert-name " + config.fqdn)
 	os.remove("/etc/nginx/sites-enabled/" + config.name + ".conf")
 	os.system("service nginx restart")
 	config.delete()
