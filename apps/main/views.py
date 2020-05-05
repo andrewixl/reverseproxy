@@ -51,3 +51,11 @@ def createConfig(name, fqdn, ip, port):
 	''')
 	file.close()
 	os.system("service nginx restart")
+
+def addSSL(request, id):
+	config = Config.objects.get(id=id)
+	os.system("certbot --nginx --nginx -d " + config.fqdn + " --non-interactive --agree-tos --register-unsafely-without-email --redirect")
+	os.system("service nginx restart")
+	config.ssl = True
+	messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
+	return redirect('/')

@@ -12,19 +12,14 @@ class ConfigManager(models.Manager):
         if len(postData['fqdn']) < 1:
             results['status'] = False
             results['errors'].append('FQDN is too Short')
-        # if postData['enable'] == 'True':
-        #     postData['enable'] == True
-        # else:
-        #     postData['enable'] == False
 
         if results['status'] == True:
-            # results['config'] = Config.objects.create(enable = postData['enable'], name = postData['name'], fqdn = postData['fqdn'], ipAddress = postData['ip'], portNumber = postData['port'],)
-            results['config'] = Config.objects.create(name = postData['name'], fqdn = postData['fqdn'], ipAddress = postData['ip'], portNumber = postData['port'],)
+            results['config'] = Config.objects.create(name = postData['name'], fqdn = postData['fqdn'], ssl = False, ipAddress = postData['ip'], portNumber = postData['port'],)
             return results
 class Config(models.Model):
-    # enable = models.BooleanField(default = False)
     name = models.CharField(max_length = 50)
     fqdn = models.CharField(max_length = 50)
+    ssl = models.BooleanField(default = False)
     ipAddress = models.CharField(max_length = 50)
     portNumber = models.IntegerField(default = 0)
     objects = ConfigManager()

@@ -97,9 +97,11 @@
               <tr>
                 <th>Name</th>
                 <th>FQDN</th>
+                <th>SSL</th>
                 <th>IP Address</th>
                 <th>Port</th>
                 <th>Delete</th>
+                <th>Add SSL</th>
               </tr>
             </thead>
             <tbody>
@@ -110,7 +112,8 @@
                     <td><a href="http://{{config.fqdn}}/">{{config.fqdn}}</a></td>
                     <td>{{config.ipAddress}}</td>	
                     <td>{{config.portNumber}}</td>	
-                    <td><a href="/remove/{{config.id}}"><button>Delete</button></a></td>	
+                    <td><a href="/remove/{{config.id}}"><button>Delete</button></a></td>
+                    <td><a href="/addssl/{{config.id}}"><button>Add SSL</button></a></td>
                 </tr>
                 {%endfor%}
             </tbody>
