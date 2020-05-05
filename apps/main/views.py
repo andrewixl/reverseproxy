@@ -75,3 +75,8 @@ def renewSSL(request, id):
 	# config.save()
 	# messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
 	return redirect('/')
+
+def runUpdate(request):
+	os.system("git pull")
+	messages.success(request, 'AwB Tech: Reverse Proxy, Has Been Updated to the Latest Version')
+	return redirect('/')
