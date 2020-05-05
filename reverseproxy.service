@@ -4,6 +4,8 @@ Description=reverseproxy systemd service.
 [Service]
 Type=simple
 ExecStart=/bin/bash /usr/bin/startserver.sh
+User=administrator
+Group=root
 
 [Install]
 WantedBy=multi-user.target
