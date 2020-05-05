@@ -57,5 +57,6 @@ def addSSL(request, id):
 	os.system("certbot --nginx --nginx -d " + config.fqdn + " --non-interactive --agree-tos --register-unsafely-without-email --redirect")
 	os.system("service nginx restart")
 	config.ssl = True
+	config.save()
 	messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
 	return redirect('/')
