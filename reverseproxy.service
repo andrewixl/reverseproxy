@@ -1,11 +1,15 @@
 [Unit]
-Description=reverseproxy systemd service.
+Description=Reverse Proxy Service
+After=network.target
+StartLimitIntervalSec=0
 
 [Service]
-Type=simple
-ExecStart=/bin/bash /usr/bin/startserver.sh
-User=administrator
-Group=root
+Type=forking
+WorkingDirectory=/root/reverseproxy/
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/bin/bash run.sh start
 
 [Install]
 WantedBy=multi-user.target

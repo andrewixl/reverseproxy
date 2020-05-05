@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
+{% load static %}
 
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">AwB Tech: Reverse Proxy</a>
+    <a class="navbar-brand" href="/"><img id="logo" src="{% static 'main/img/logo.svg' %}" alt=""></a> <a class="navbar-brand" href="/"><h4 id="right_header">Reverse Proxy</h4> </a>
 </nav>
 
 <br>
@@ -56,23 +56,23 @@
                     <td>3389</td>
                 </tr>
                 <tr>
-                    <td>Nzbget</td>
+                    <td><img id="port-logo" src="{% static 'main/img/nzbget.png' %}" alt=""> Nzbget</td>
                     <td>6789</td>
                 </tr>
-                <tr>
-                    <td>Radarr</td>
+                <tr></tr>
+                    <td><img id="port-logo" src="{% static 'main/img/radarr.svg' %}" alt=""> Radarr</td>
                     <td>7878</td>
                 </tr>
                 <tr>
-                    <td>Deluge</td>
+                    <td><img id="port-logo" src="{% static 'main/img/deluge.svg' %}" alt=""> Deluge</td>
                     <td>8112</td>
                 </tr>
                 <tr>
-                    <td>Sonarr</td>
+                    <td><img id="port-logo" src="{% static 'main/img/sonarr.svg' %}" alt=""> Sonarr</td>
                     <td>8989</td>
                 </tr>
                 <tr>
-                    <td>Jackett</td>
+                    <td><img id="port-logo" src="{% static 'main/img/jackett.png' %}" alt=""> Jackett</td>
                     <td>9117</td>
                 </tr>
                 <tr>
@@ -81,6 +81,20 @@
                 </tr>
             </tbody>
         </table>
+        <style> 
+            #port-logo{ 
+            width: auto; 
+            height: 25px; 
+            } 
+            #logo{ 
+            width: auto; 
+            height: 35px; 
+            } 
+            #right_header {
+            color: #fff;
+            float: right;
+            }
+          </style>
       </div>
       </div>
     </div>
@@ -111,9 +125,9 @@
                     <td>{{config.name}}</td>
                     <td><a href="http://{{config.fqdn}}/">{{config.fqdn}}</a></td>
                     {% if config.ssl == True %}
-                        <td>Active</td>
+                        <td style="color:green;">Active</td>
                     {% elif config.ssl == False %}
-                        <td>Inactive</td>
+                        <td style="color:red;">Inactive</td>
                     {% endif %}
                     <td>{{config.ipAddress}}</td>	
                     <td>{{config.portNumber}}</td>

@@ -1,6 +1,5 @@
-cp startserver.sh /usr/bin/startserver.sh
-chmod +x /usr/bin/startserver.sh
+chmod +x run.sh
+export PATH="$PATH:/root/reverseproxy
+sudo ln -s /root/reverseproxy/manage.py manage
 cp reverseproxy.service /etc/systemd/system/reverseproxy.service
-chmod 644 /etc/systemd/system/reverseproxy.service
-systemctl start reverseproxy
-systemctl enable reverseproxy
+systemctl enable reverseproxy.service
