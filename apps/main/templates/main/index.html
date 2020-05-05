@@ -1,5 +1,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+
+
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">AwB Tech: Reverse Proxy</a>
+</nav>
+
+<br>
 {%if messages%}
     {%for message in messages%}
         <div class="alert alert-primary" role="alert">
@@ -7,11 +14,6 @@
         </div>
 	{%endfor%}
 {%endif%}
-
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">AwB Tech: Reverse Proxy</a>
-</nav>
-
 <br>
 
 <div class="container">
