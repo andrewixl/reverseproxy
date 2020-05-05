@@ -1,59 +1,123 @@
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 {%if messages%}
-	{%for message in messages%}
-		<p>{{message}}</p>
+    {%for message in messages%}
+        <div class="alert alert-primary" role="alert">
+            <p>{{message}}</p>
+        </div>
 	{%endfor%}
 {%endif%}
 
-<form action='/addconfig' method="post">
-    {%csrf_token%}
-    <!-- <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="enable" value="True" id="defaultCheck1">
-        <label class="form-check-label" for="defaultCheck1">
-          Enable
-        </label>
-    </div> -->
-    <div class="form-group">
-        <label for="formGroupExampleInput2">Configuration Name</label>
-        <input type="text" name="name" class="form-control" id="formGroupExampleInput2" placeholder="Configuration Name">
-    </div>
-    <div class="form-group">
-        <label for="formGroupExampleInput2">Enter FQDN</label>
-        <input type="text" name="fqdn" class="form-control" id="formGroupExampleInput2" placeholder="example.domain.com">
-    </div>
-    <div class="form-group">
-        <label for="formGroupExampleInput2">Enter IP Address</label>
-        <input type="text" name="ip" class="form-control" id="formGroupExampleInput2" placeholder="127.0.0.1">
-    </div>
-    <div class="form-group">
-        <label for="formGroupExampleInput2">Enter Port Number</label>
-        <input type="text" name="port" class="form-control" id="formGroupExampleInput2" placeholder="8000">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">AwB Tech: Reverse Proxy</a>
+</nav>
 
-  <table border="1">
-    <tr>
-        <th>Name</th>
-        <th>FQDN</th>
-        <th>IP Address</th>
-        <th>Port</th>
-    </tr>
-        {%for config in config%}
-            <tr>
-                <!-- <td>{{config.enable}}</td> -->
-                <td>{{config.name}}</td>
-                <td>{{config.fqdn}}</td>
-                <td>{{config.ipAddress}}</td>	
-                <td>{{config.portNumber}}</td>	
-                <td><a href="/remove/{{config.id}}"><button>Delete</button></a></td>	
-            </tr>
-        {%endfor%}
-    
-    </table>
-    <br>
-    <h5>AwB Tech 2020</h5>
+<br>
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h3>Create Configuration</h3>
+            <form action='/addconfig' method="post">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Configuration Name</label>
+                    <input type="text" name="name" class="form-control" id="formGroupExampleInput2" placeholder="Configuration Name">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Enter FQDN</label>
+                    <input type="text" name="fqdn" class="form-control" id="formGroupExampleInput2" placeholder="example.domain.com">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Enter IP Address</label>
+                    <input type="text" name="ip" class="form-control" id="formGroupExampleInput2" placeholder="127.0.0.1">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Enter Port Number</label>
+                    <input type="text" name="port" class="form-control" id="formGroupExampleInput2" placeholder="8000">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+      </div>
+      <div class="col-sm">
+        <h3>Common Ports</h3>
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Service</th>
+                <th>Port</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RDP</td>
+                    <td>3389</td>
+                </tr>
+                <tr>
+                    <td>Nzbget</td>
+                    <td>6789</td>
+                </tr>
+                <tr>
+                    <td>Radarr</td>
+                    <td>7878</td>
+                </tr>
+                <tr>
+                    <td>Deluge</td>
+                    <td>8112</td>
+                </tr>
+                <tr>
+                    <td>Sonarr</td>
+                    <td>8989</td>
+                </tr>
+                <tr>
+                    <td>Jackett</td>
+                    <td>9117</td>
+                </tr>
+                <tr>
+                    <td>Plex</td>
+                    <td>32400</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+  <hr>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h3>Current Configurations</h3>
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>FQDN</th>
+                <th>IP Address</th>
+                <th>Port</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+                {%for config in config%}
+                <tr>
+                    <!-- <td>{{config.enable}}</td> -->
+                    <td>{{config.name}}</td>
+                    <td>{{config.fqdn}}</td>
+                    <td>{{config.ipAddress}}</td>	
+                    <td>{{config.portNumber}}</td>	
+                    <td><a href="/remove/{{config.id}}"><button>Delete</button></a></td>	
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
