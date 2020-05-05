@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from .models import Config
 from django.contrib import messages
 import os, datetime
-from datetime import datetime  
-from datetime import timedelta  
+from datetime import time  
+from datetime import datetime, date, time, timedelta
 
 def index(request):
 	# Config.objects.all().delete()
@@ -60,7 +60,7 @@ def addSSL(request, id):
 	os.system("certbot --nginx --nginx -d " + config.fqdn + " --non-interactive --agree-tos --register-unsafely-without-email --redirect")
 	os.system("service nginx restart")
 	config.ssl = True
-	config.sslexpire = datetime.date.today() + timedelta(days=90)  
+	config.sslexpire = date.today() + timedelta(days=90)
 	config.save()
 	messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
 	return redirect('/')
