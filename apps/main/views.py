@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Config
 from django.contrib import messages
-import os, datetime
+import os
+from datetime import datetime  
+from datetime import timedelta  
 
 def index(request):
 	# Config.objects.all().delete()
