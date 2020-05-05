@@ -97,11 +97,12 @@
               <tr>
                 <th>Name</th>
                 <th>FQDN</th>
-                <th>SSL</th>
+                <th>SSL Status</th>
                 <th>IP Address</th>
                 <th>Port</th>
+                <th>SSL Expires</th>
+                <th>SSL</th>
                 <th>Delete</th>
-                <th>Add SSL</th>
               </tr>
             </thead>
             <tbody>
@@ -109,11 +110,24 @@
                 <tr>
                     <td>{{config.name}}</td>
                     <td><a href="http://{{config.fqdn}}/">{{config.fqdn}}</a></td>
-                    <td>{{config.ssl}}</td>
+                    {% if config.ssl == True %}
+                        <td>Active</td>
+                    {% elif config.ssl == False %}
+                        <td>Inactive</td>
+                    {% endif %}
                     <td>{{config.ipAddress}}</td>	
-                    <td>{{config.portNumber}}</td>	
+                    <td>{{config.portNumber}}</td>
+                    {% ifnotequal config.sslexpire|stringformat:"s" "1970-01-01" %}
+                        <td>{{config.sslexpire}}</td>
+                    {% else %}
+                        <td>N/A</td>
+                    {% endifnotequal %}
+                    {% if config.ssl == False %}
+                        <td><a href="/addssl/{{config.id}}"><button>Add SSL</button></a></td>
+                    {% else %}
+                        <td><a href="/renewssl/{{config.id}}"><button>Renew SSL</button></a></td>
+                    {% endif %}
                     <td><a href="/remove/{{config.id}}"><button>Delete</button></a></td>
-                    <td><a href="/addssl/{{config.id}}"><button>Add SSL</button></a></td>
                 </tr>
                 {%endfor%}
             </tbody>

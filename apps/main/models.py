@@ -20,6 +20,12 @@ class Config(models.Model):
     name = models.CharField(max_length = 50)
     fqdn = models.CharField(max_length = 50)
     ssl = models.BooleanField(default = False)
+    sslexpire = models.DateField(default = "1970-01-01")
     ipAddress = models.CharField(max_length = 50)
     portNumber = models.IntegerField(default = 0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = ConfigManager()
+
+    def __str__(self):
+        return self.name

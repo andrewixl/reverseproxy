@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from .models import Config
 from django.contrib import messages
-import os
+import os, datetime
 
 def index(request):
 	# Config.objects.all().delete()
 	context = {
-	'config': Config.objects.all()
+	'config': Config.objects.all(),
+	# 'datetime' : datetime.date.today()
 	}
 	return render( request, 'main/index.html', context)
 
@@ -33,10 +34,10 @@ def removeConfig(request, id):
 def createConfig(name, fqdn, ip, port):
 	print ("Config Creation Started")
 	# Ubuntu
-	file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
+	# file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
 
 	# Windows
-	# file = open(name + ".conf", "w")
+	file = open(name + ".conf", "w")
 	file.write(
 '''server {
     server_name ''' + fqdn + ''';
@@ -57,6 +58,16 @@ def addSSL(request, id):
 	os.system("certbot --nginx --nginx -d " + config.fqdn + " --non-interactive --agree-tos --register-unsafely-without-email --redirect")
 	os.system("service nginx restart")
 	config.ssl = True
+	config.sslexpire = datetime.date.today() + timedelta(days=90)  
 	config.save()
 	messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
+	return redirect('/')
+
+def renewSSL(request, id):
+	# config = Config.objects.get(id=id)
+	# os.system("certbot --nginx --nginx -d " + config.fqdn + " --non-interactive --agree-tos --register-unsafely-without-email --redirect")
+	# os.system("service nginx restart")
+	# config.ssl = True
+	# config.save()
+	# messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
 	return redirect('/')
