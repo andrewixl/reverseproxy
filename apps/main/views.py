@@ -36,10 +36,10 @@ def removeConfig(request, id):
 def createConfig(name, fqdn, ip, port):
 	print ("Config Creation Started")
 	# Ubuntu
-	# file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
+	file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
 
 	# Windows
-	file = open(name + ".conf", "w")
+	# file = open(name + ".conf", "w")
 	file.write(
 '''server {
     server_name ''' + fqdn + ''';
