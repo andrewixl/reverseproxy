@@ -1,0 +1,45 @@
+#port-logo{ 
+    width: auto; 
+    height: 25px; 
+} 
+
+#logo{ 
+    width: auto; 
+    height: 35px; 
+} 
+
+.right_header {
+    /* color: #fff; */
+    float: right;
+}
+
+.center_header {
+    color: #fff;
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.disable{
+    pointer-events: none;
+}
+
+.auth_enabled{
+    border-style: solid;
+    color: rgb(0, 180, 24);
+    padding: 2%;
+}
+
+.auth_disabled{
+    border-style: solid;
+    color: rgb(255, 0, 0);
+    padding: 2%;
+}
+
+.update_border{
+    border-style: solid;
+    color: rgb(18, 0, 180);
+    padding: 2%;
+}

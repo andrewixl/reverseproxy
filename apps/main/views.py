@@ -1,15 +1,36 @@
 from django.shortcuts import render,redirect
-from .models import Config
+from .models import Config, Auth
 from django.contrib import messages
 import os, datetime
 from datetime import time  
 from datetime import datetime, date, time, timedelta
 
+def genErrors(request, Emessages):
+	for message in Emessages:
+		messages.error(request, message)
+
+# Checks if Auth is Active, If Active Checks if User is Logged In
+def checkUser(request):
+	auth_active = bool(len(Auth.objects.all()))
+	print (auth_active)
+	try:
+		if auth_active == True:
+			if request.session['username']:
+				return True
+			else:
+				return False
+		else:
+			return True
+	except:
+		return False
+	
+# Displays User the Proxy Home Page
 def index(request):
-	# Config.objects.all().delete()
+	if checkUser(request) == False:
+		return redirect('/login')
 	context = {
 	'config': Config.objects.all(),
-	# 'datetime' : datetime.date.today()
+	'auth_active': bool(len(Auth.objects.all())),
 	}
 	return render( request, 'main/index.html', context)
 
@@ -76,6 +97,54 @@ def renewSSL(request, id):
 	# messages.success(request, 'SSL has Been Added to the ' + config.name + ' Config')
 	return redirect('/')
 
+def settings(request):
+	if checkUser(request) == False:
+		return redirect('/login')
+	
+	context = {
+	'auth_active': bool(len(Auth.objects.all())),
+	}
+	return render( request, 'main/settings.html', context)
+
+# Enables Authentication
+def addAuth(request):
+	results = Auth.objects.addAuth(request.POST)
+	if results['status'] == False:
+		genErrors(request, results['errors'])
+		return redirect('/settings')
+	else:
+		# addAuth(request.POST['username'], request.POST['password'], request.POST['c_password'])
+		messages.success(request, 'Authentication has Been Enabled')
+	return redirect('/settings')
+
+# Disables Authentication
+def disableAuth(request):
+	Auth.objects.all().delete()
+	return redirect('/settings')
+
+
+def loginAuth(request):
+	if checkUser(request) == True:
+		return redirect('/')
+	return render( request, 'main/login.html')
+
+
+def loginVal(request):
+	results=Auth.objects.loginVal(request.POST)
+	if results['status'] == False:
+		genErrors(request, results['errors'])
+		return redirect('/')
+
+	request.session['username'] = results['auth'][0].username
+	print (request.session['username'])
+	return redirect('/')
+
+# Logs User out of the Console
+def logout(request):
+	request.session.flush()
+	return redirect('/login')
+
+# Pulls Latest Commit From Github
 def runUpdate(request):
 	os.system("git pull")
 	messages.success(request, 'AwB Tech: Reverse Proxy, Has Been Updated to the Latest Version')

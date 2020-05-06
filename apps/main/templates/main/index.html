@@ -1,10 +1,17 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 {% load static %}
+<link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
 
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/"><img id="logo" src="{% static 'main/img/logo.svg' %}" alt=""></a> <a class="navbar-brand" href="/"><a href="/update"><button type="button" class="btn btn-info">Update System</button></a><h4 id="right_header">Reverse Proxy</h4> </a>
-</nav>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+    <a class="navbar-brand" href="/"><img id="logo" src="{% static 'main/img/logo.svg' %}" alt="HOME"></a> 
+    <a href="/"></a><h4 class="center_header">Reverse Proxy</h4></a>
+    <button class="btn btn-success ml-auto mr-1 disable">v0.6-alpha</button>
+    <a href="/settings"><button type="button" class="btn btn-info ml-auto mr-1">Settings</button></a>
+    {% if auth_active == True %}
+        <a href="/logout"><button type="button" class="btn btn-info ml-auto mr-1">Logout</button></a>
+    {% endif %}
+    </nav>
 <br>
 {%if messages%}
     {%for message in messages%}
@@ -80,20 +87,6 @@
                 </tr>
             </tbody>
         </table>
-        <style> 
-            #port-logo{ 
-            width: auto; 
-            height: 25px; 
-            } 
-            #logo{ 
-            width: auto; 
-            height: 35px; 
-            } 
-            #right_header {
-            color: #fff;
-            float: right;
-            }
-          </style>
       </div>
       </div>
     </div>
