@@ -1,3 +1,7 @@
+<a href="https://github.com/andrewixl/reverseproxy/blob/master/LICENSE.txt"><img alt="GitHub license" src="https://img.shields.io/github/license/andrewixl/reverseproxy"></a>
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/andrewixl/reverseproxy">
+<a href="https://github.com/andrewixl/reverseproxy/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/andrewixl/reverseproxy"></a>
+
 # AwB Tech Reverse Proxy (NGINX)
 The reverse proxy is a nginx gui with SSL support through Let's Encrypt Certbot to manage your local webservers and allow them to be externally routable from outside your network through IP Forwarding.
 
