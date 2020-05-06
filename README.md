@@ -1,4 +1,4 @@
-# Nginx Reverse Proxy
+# AwB Tech Reverse Proxy (NGINX)
 The reverse proxy is a nginx gui with SSL support through Let's Encrypt Certbot to manage your local webservers and allow them to be externally routable from outside your network through IP Forwarding.
 
 ## Requirements
