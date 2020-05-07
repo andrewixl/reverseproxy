@@ -30,6 +30,8 @@ class Config(models.Model):
     sslexpire = models.DateField(default = "1970-01-01")
     ipAddress = models.CharField(max_length = 50)
     portNumber = models.IntegerField(default = 0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = ConfigManager()
 
     def __str__(self):
