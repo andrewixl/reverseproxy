@@ -1,5 +1,7 @@
 from . import views
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.index),
@@ -14,4 +16,6 @@ urlpatterns = [
     url(r'^remove/(?P<id>\d+)$', views.removeConfig),
     url(r'^addssl/(?P<id>\d+)$', views.addSSL),
     url(r'^renewssl/(?P<id>\d+)$', views.renewSSL),
+    url(r'^imports$', views.imports),
+    url(r'^exportconfig$', views.exportConfig),
 ]

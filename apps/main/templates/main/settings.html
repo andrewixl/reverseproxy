@@ -34,19 +34,39 @@
               <input type="password" name="c_password" placeholder="Confirm Password" size=30><br>
               <input type='submit' value='Enable Authentication'>
           </form>
+        </div>
       {% elif auth_active == True %}
         <div class="col-sm auth_enabled">
           <h2>Authentication (Enabled)</h2>
           <a href="/disableauth"><button type="button" class="btn btn-info">Disable Authentication</button></a>
-      {% endif %}
         </div>
+      {% endif %}
       <div class="col-sm update_border">
         <h2>Update System</h2>
         <a href="/update"><button type="button" class="btn btn-info">Update</button></a>
-      </div>
+
+        <hr>
+
+        <h2>Import Configuration</h2>
+        <h7 class='text_red'>(Will Overwrite Existing Configurations with the Same FQDN)</h7>
+        <form method="post" enctype="multipart/form-data" action='/imports'>
+          {% csrf_token %}
+          <input type="file" name="myfile" size=30><br>
+          <button type="submit">Upload</button>
+        </form>
+      
+        {% if uploaded_file_url %}
+          <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+        {% endif %}
+
+        <hr>
+
+        <h2>Export Configuration</h2>
+        <a href="/exportconfig"><button>Export</button></a>
       </div>
     </div>
   </div>
+</div>
 
     
 

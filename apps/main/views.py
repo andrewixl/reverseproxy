@@ -5,6 +5,14 @@ import os, datetime
 from datetime import time  
 from datetime import datetime, date, time, timedelta
 
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
+from .admin import ConfigResource
+from django.http import HttpResponse
+
+import json
+
 def genErrors(request, Emessages):
 	for message in Emessages:
 		messages.error(request, message)
@@ -12,7 +20,7 @@ def genErrors(request, Emessages):
 # Checks if Auth is Active, If Active Checks if User is Logged In
 def checkUser(request):
 	auth_active = bool(len(Auth.objects.all()))
-	print (auth_active)
+	# print (auth_active)
 	try:
 		if auth_active == True:
 			if request.session['username']:
@@ -57,7 +65,7 @@ def removeConfig(request, id):
 
 # Creates Nginx Configuration File
 def createConfig(name, fqdn, ip, port):
-	print ("Config Creation Started")
+	# print ("Config Creation Started")
 	# Ubuntu
 	file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
 
@@ -136,7 +144,7 @@ def loginVal(request):
 		return redirect('/')
 
 	request.session['username'] = results['auth'][0].username
-	print (request.session['username'])
+	# print (request.session['username'])
 	return redirect('/')
 
 # Logs User out of the Console
@@ -149,3 +157,32 @@ def runUpdate(request):
 	os.system("git pull")
 	messages.success(request, 'AwB Tech: Reverse Proxy, Has Been Updated to the Latest Version')
 	return redirect('/')
+
+# Imports JSON Configuration File
+def imports(request):
+	if request.method == 'POST':
+		configuration = request.FILES['myfile']
+		data = json.load(configuration) 
+		for i in data: 
+			if bool(Config.objects.filter(fqdn=i['fqdn'])):
+				print("Exists")
+			elif not bool(Config.objects.filter(fqdn=i['fqdn'])):
+				print ("Does Not Exist... Adding to Database")
+				print (i['name'])
+				config = [i['name'], i['fqdn'], i['ipAddress'], int(i['portNumber'])]
+				Config.objects.createConfig(config)
+				print ("Configurations Added")
+			else:
+				print ("A Fatal Error Has Occurred")
+			print(i['fqdn'])
+	return redirect('/settings')
+
+# Exports JSON Configuration File
+from django.core import serializers
+import bcrypt
+def exportConfig(request):
+	dataset = ConfigResource().export()
+	response = HttpResponse(dataset.json, content_type='application/json')
+	response['Content-Disposition'] = 'attachment; filename="configurations.json"'
+	return response
+	return redirect('/settings')
