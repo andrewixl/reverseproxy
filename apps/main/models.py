@@ -18,7 +18,7 @@ class ConfigManager(models.Manager):
             results['config'] = Config.objects.create(name = postData['name'], fqdn = postData['fqdn'], ssl = False, ipAddress = postData['ip'], portNumber = postData['port'],)
         return results
 
-    def createConfig(self, config):
+    def createConfigImport(self, config):
         print (config)
         Config.objects.create(name = config[0], fqdn = config[1], ssl = False, ipAddress = config[2], portNumber = config[3],)
 

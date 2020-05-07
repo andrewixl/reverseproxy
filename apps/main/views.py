@@ -158,6 +158,7 @@ def runUpdate(request):
 	os.system("git pull")
 	os.system("pip3 install -r requirements.txt")
 	os.system("cd ..")
+	os.system("systemctl restart reverseproxy")
 	messages.success(request, 'AwB Tech: Reverse Proxy, Has Been Updated to the Latest Version')
 	return redirect('/')
 
@@ -173,7 +174,7 @@ def imports(request):
 				print ("Does Not Exist... Adding to Database")
 				print (i['name'])
 				config = [i['name'], i['fqdn'], i['ipAddress'], int(i['portNumber'])]
-				Config.objects.createConfig(config)
+				Config.objects.createConfigImport(config)
 				print ("Configurations Added")
 			else:
 				print ("A Fatal Error Has Occurred")
