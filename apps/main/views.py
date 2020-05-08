@@ -70,7 +70,7 @@ def createConfig(name, fqdn, ip, port):
 	# print ("Config Creation Started")
 	# Ubuntu
 	path = os.path.join("/etc/nginx/sites-enabled/" + name + ".conf")
-	os.system("touch " + path)
+	# os.system("touch " + path)
 	file = open(path, "w")
 
 	# Windows
