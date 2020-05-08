@@ -4,13 +4,8 @@ from django.contrib import messages
 import os, datetime
 from datetime import time  
 from datetime import datetime, date, time, timedelta
-
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-
-from .admin import ConfigResource
+from django.core import serializers
 from django.http import HttpResponse
-
 import json
 
 def genErrors(request, Emessages):
@@ -67,10 +62,10 @@ def removeConfig(request, id):
 def createConfig(name, fqdn, ip, port):
 	# print ("Config Creation Started")
 	# Ubuntu
-	file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
+	# file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
 
 	# Windows
-	# file = open(name + ".conf", "w")
+	file = open(name + ".conf", "w")
 	file.write(
 '''server {
     server_name ''' + fqdn + ''';
@@ -166,7 +161,10 @@ def runUpdate(request):
 def imports(request):
 	if request.method == 'POST':
 		configuration = request.FILES['myfile']
-		data = json.load(configuration) 
+		fileData = json.load(configuration) 
+		data = []
+		for fields in fileData:
+			data.append(fields['fields'])
 		for i in data: 
 			if bool(Config.objects.filter(fqdn=i['fqdn'])):
 				print("Exists")
@@ -182,11 +180,12 @@ def imports(request):
 	return redirect('/settings')
 
 # Exports JSON Configuration File
-from django.core import serializers
-import bcrypt
+
+
 def exportConfig(request):
-	dataset = ConfigResource().export()
-	response = HttpResponse(dataset.json, content_type='application/json')
+	qs = Config.objects.all()
+	qs_json = serializers.serialize('json', qs, fields=('name','fqdn','ipAddress','portNumber'))
+	response = HttpResponse(qs_json, content_type='application/json')
 	response['Content-Disposition'] = 'attachment; filename="configurations.json"'
 	return response
 	return redirect('/settings')
