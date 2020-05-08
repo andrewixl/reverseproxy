@@ -31,6 +31,11 @@ bash install.sh
 ## Usage
 Reverse Proxy GUI is Accessable at SERVER_IP:8000
 
+#### Manage Reverse Proxy Service:
+- systemctl start reverseproxy
+- systemctl stop reverseproxy
+- systemctl restart reverseproxy
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
