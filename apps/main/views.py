@@ -74,13 +74,13 @@ def createConfig(name, fqdn, ip, port):
 	file = open(path, "w")
 
 	# Windows
-	#file = open(name + ".conf", "w")
+	# file = open(name + ".conf", "w")
 	file.write(
 '''server {
     server_name ''' + fqdn + ''';
  
     location / {
-            proxy_pass http://''' + ip + ''':''' + port + ''';
+            proxy_pass http://''' + ip + ''':''' + str(port) + ''';
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -88,6 +88,7 @@ def createConfig(name, fqdn, ip, port):
 }
 	''')
 	file.close()
+	print ("File Created")
 	os.system("service nginx restart")
 
 def addSSL(request, id):
