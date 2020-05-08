@@ -180,6 +180,7 @@ def imports(request):
 				print (i['name'])
 				config = [i['name'], i['fqdn'], i['ipAddress'], int(i['portNumber'])]
 				Config.objects.createConfigImport(config)
+				createConfig(i['name'], i['fqdn'], i['ipAddress'], int(i['portNumber']))
 				print ("Configurations Added")
 			else:
 				print ("A Fatal Error Has Occurred")
