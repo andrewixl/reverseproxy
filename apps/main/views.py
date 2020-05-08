@@ -1,12 +1,19 @@
-from django.shortcuts import render,redirect
+# File Dependencies
 from .models import Config, Auth
+
+# Django Dependencies
+from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.core import serializers
+from django.http import HttpResponse
+
+# Python Dependencies
+import json
 import os, datetime
 from datetime import time  
 from datetime import datetime, date, time, timedelta
-from django.core import serializers
-from django.http import HttpResponse
-import json
+
+
 
 def genErrors(request, Emessages):
 	for message in Emessages:
@@ -62,10 +69,10 @@ def removeConfig(request, id):
 def createConfig(name, fqdn, ip, port):
 	# print ("Config Creation Started")
 	# Ubuntu
-	# file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
+	file = open("/etc/nginx/sites-enabled/" + name + ".conf", "w")
 
 	# Windows
-	file = open(name + ".conf", "w")
+	#file = open(name + ".conf", "w")
 	file.write(
 '''server {
     server_name ''' + fqdn + ''';
